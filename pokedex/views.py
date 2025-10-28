@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
-from.models import Pokemon
+from.models import Pokemon, Trainer
 
 def index(request):
     pokemons = Pokemon.objects.all()
@@ -12,5 +12,13 @@ def pokemon(request, id:int):
     template = loader.get_template('display_pokemon.html')
     context = {
         'pokemon': pokemon
+    }
+    return HttpResponse(template.render(context, request))
+
+def trainer(request, id:int):
+    trainer = Trainer.objects.get(id=id)
+    template = loader.get_template('display_trainer.html')
+    context = {
+        'trainer': trainer
     }
     return HttpResponse(template.render(context, request))
