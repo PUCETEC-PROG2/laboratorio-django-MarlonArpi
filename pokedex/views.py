@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.template import loader
-from.models import Pokemon, Trainer
 from django.shortcuts import redirect, render
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+from.models import Pokemon, Trainer
 from pokedex.forms import PokemonForm, TrainerForm
 
 def index(request):
@@ -30,6 +32,7 @@ def trainer(request, id:int):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
 def add_pokemon(request):
     if request.method == 'POST':
         form = PokemonForm(request.POST, request.FILES)
@@ -88,3 +91,6 @@ def delete_trainer(request, id:int):
     trainer = Trainer.objects.get(id=id)
     trainer.delete()
     return redirect('pokedex:index')
+
+class CustomLoginView(LoginView):
+    template_name = "login_Form.html"
