@@ -8,36 +8,43 @@
 </div>
 
 <h3 class="mt-5 text-primary border-bottom border-3 border-primary pb-2">Entrenadores:</h3>
-{%if user.is_authenticated %}
+{% if user.is_authenticated %}
 <a href="{% url 'pokedex:add_trainer' %}" class="btn btn-success mb-3">
     <i class="fa-solid fa-plus"></i> Añadir Entrenador
 </a>
 {% endif %}
+
 <div class="row mt-3">
     {% for trainer in trainers %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
         <br>
-        <div class="card shadow-lg border-0 rounded-3 bg-light h-100 text-center p-3">
-            {% if trainer.picture %}
-            <img src="{{ trainer.picture.url }}" class="card-img-top" alt="{{ trainer.name }}">
-            {% else %}
-            <img src="{% static 'no-image.png' %}" class="card-img-top" alt="Sin imagen">
-            {% endif %}
 
+        <div class="card trainer-card shadow-lg border-0 rounded-3 bg-light h-100 text-center p-3 fade-in">
+
+            {% if trainer.picture %}
+            <div class="card-img-wrap">
+                <img src="{{ trainer.picture.url }}" class="trainer-img" alt="{{ trainer.name }}">
+            </div>
+            {% else %}
+            <div class="card-img-wrap">
+                <img src="{% static 'no-image.png' %}" class="trainer-img" alt="Sin imagen">
+            </div>
+            {% endif %}
 
             <div class="card-body">
                 <h5 class="card-title text-dark fw-bold">{{ trainer.name|capfirst }}</h5>
-                <p class="text-muted mb-3">
-                    Nivel {{ trainer.level }} | Edad {{ trainer.age }}
-                </p>
+                <p class="text-muted mb-3">Nivel {{ trainer.level }} | Edad {{ trainer.age }}</p>
+
                 <div class="d-flex justify-content-center gap-2">
                     <a href="{% url 'pokedex:trainer' trainer.id %}" class="btn btn-primary btn-sm">
                         <i class="fa-solid fa-eye"></i>
                     </a>
-                    {%if user.is_authenticated %}
+
+                    {% if user.is_authenticated %}
                     <a href="{% url 'pokedex:edit_trainer' trainer.id %}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
+
                     <a href="{% url 'pokedex:delete_trainer' trainer.id %}" class="btn btn-danger btn-sm">
                         <i class="fa-solid fa-trash"></i>
                     </a>
@@ -52,22 +59,31 @@
 <hr class="my-5">
 
 <h3 class="mt-4 fw-bold pb-2 text-info border-bottom border-info">Pókemons:</h3>
-{%if user.is_authenticated %}
+{% if user.is_authenticated %}
 <a href="{% url 'pokedex:add_pokemon' %}" class="btn btn-success mb-3">
     <i class="fa-solid fa-plus"></i> Añadir Pókemon
 </a>
 {% endif %}
+
 <div class="row mt-3">
     {% for pokemon in pokemons %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
         <br>
-        <div class="card shadow-sm border-0 rounded-4 overflow-hidden bg-white h-100">
+
+        <div class="card pokemon-card shadow-sm border-0 rounded-4 overflow-hidden bg-white h-100 fade-in">
+
             <a href="{% url 'pokedex:pokemon' pokemon.id %}" class="text-decoration-none text-dark">
+
                 {% if pokemon.picture %}
-                <img src="{{ pokemon.picture.url }}" class="card-img-top" alt="{{ pokemon.name }}">
+                <div class="card-img-wrap">
+                    <img src="{{ pokemon.picture.url }}" class="pokemon-img" alt="{{ pokemon.name }}">
+                </div>
                 {% else %}
-                <img src="{% static 'no-image.png' %}" class="card-img-top" alt="Sin imagen">
+                <div class="card-img-wrap">
+                    <img src="{% static 'no-image.png' %}" class="pokemon-img" alt="Sin imagen">
+                </div>
                 {% endif %}
+
                 <div class="card-body text-center">
                     <h5 class="card-title text-dark fw-bold">{{ pokemon.name|capfirst }}</h5>
                     <p class="text-muted">
@@ -76,13 +92,16 @@
                         Altura: {{ pokemon.height }} cm<br>
                         Entrenador: {{ pokemon.trainer }}
                     </p>
+
                     <a href="{% url 'pokedex:pokemon' pokemon.id %}" class="btn btn-primary btn-sm">
                         <i class="fa-solid fa-eye"></i>
                     </a>
-                    {%if user.is_authenticated %}
+
+                    {% if user.is_authenticated %}
                     <a href="{% url 'pokedex:edit_pokemon' pokemon.id %}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
+
                     <a href="{% url 'pokedex:delete_pokemon' pokemon.id %}" class="btn btn-danger btn-sm">
                         <i class="fa-solid fa-trash"></i>
                     </a>
@@ -93,4 +112,5 @@
     </div>
     {% endfor %}
 </div>
+
 {% endblock content %}

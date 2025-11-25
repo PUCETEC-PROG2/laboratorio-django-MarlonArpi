@@ -3,6 +3,8 @@ from django.template import loader
 from django.shortcuts import redirect, render
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
 from.models import Pokemon, Trainer
 from pokedex.forms import PokemonForm, TrainerForm
 
@@ -94,6 +96,72 @@ def delete_trainer(request, id:int):
     trainer = Trainer.objects.get(id=id)
     trainer.delete()
     return redirect('pokedex:index')
+
+def list_trainers(request):
+    q = request.GET.get('q', '').strip()
+    trainers = Trainer.objects.all()
+
+    if q:
+        trainers = trainers.filter(
+            Q(name__icontains=q) |
+            Q(region__icontains=q)
+        )
+
+    paginator = Paginator(trainers.order_by('name'), 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'trainers': page_obj,
+        'page_obj': page_obj,
+        'q': q,
+    }
+    return render(request, 'list_trainers.html', context)
+
+
+def list_pokemons(request):
+    q = request.GET.get('q', '').strip()
+    type_filter = request.GET.get('type', '').strip()
+    trainer_filter = request.GET.get('trainer', '').strip()
+
+    pokemons = Pokemon.objects.all()
+
+    if q:
+        pokemons = pokemons.filter(
+            Q(name__icontains=q) |
+            Q(trainer__name__icontains=q)
+        )
+
+    if type_filter:
+        pokemons = pokemons.filter(type=type_filter)
+
+    if trainer_filter:
+        pokemons = pokemons.filter(trainer__id=trainer_filter)
+
+    paginator = Paginator(pokemons.order_by('name'), 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    trainers_for_filter = Trainer.objects.all()
+
+    try:
+        type_choices = Pokemon.TYPE_CHOICES
+    except Exception:
+        type_choices = []
+
+    context = {
+        'pokemons': page_obj,
+        'page_obj': page_obj,
+        'q': q,
+        'type_filter': type_filter,
+        'trainer_filter': trainer_filter,
+        'trainers_for_filter': trainers_for_filter,
+        'type_choices': type_choices,
+    }
+    return render(request, 'list_pokemons.html', context)
+
+
+
 
 class CustomLoginView(LoginView):
     template_name = "login_form.html"
