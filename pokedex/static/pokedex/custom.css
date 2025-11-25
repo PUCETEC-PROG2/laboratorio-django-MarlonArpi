@@ -71,28 +71,3 @@
   .trainer-img, .pokemon-img { height: 150px; }
 }
 
-.trainer-card {
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.trainer-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-}
-
-.card-img-wrap {
-    height: 180px;
-    overflow: hidden;
-}
-
-.trainer-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .3s ease;
-}
-
-.trainer-card:hover .trainer-img {
-    transform: scale(1.1);
-}
-
