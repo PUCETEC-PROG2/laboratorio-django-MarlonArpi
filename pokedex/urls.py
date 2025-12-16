@@ -7,7 +7,6 @@ app_name = "pokedex"
 urlpatterns = [
     path("", views.index, name="index"),
     path("pokemon/<int:id>/", views.pokemon, name="pokemon"),
-<<<<<<< HEAD
     path("add_pokemon/", views.add_pokemon, name="add_pokemon"),
     path("edit_pokemon/<int:id>/", views.edit_pokemon, name="edit_pokemon"),
     path("delete_pokemon/<int:id>/", views.delete_pokemon, name="delete_pokemon"),
@@ -20,6 +19,3 @@ urlpatterns = [
     path("login/", views.CustomLoginView.as_view(), name="login"),
     path("trainers/", views.list_trainers, name="list_trainers"),
 ]   
-=======
-]
->>>>>>> a978398 (LAB-4 ARPI EN PROCESO)
