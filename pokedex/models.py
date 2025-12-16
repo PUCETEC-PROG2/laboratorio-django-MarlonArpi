@@ -1,5 +1,6 @@
 from django.db import models
 
+<<<<<<< HEAD
     ## Trainer
     # name
     # age
@@ -41,3 +42,19 @@ class Pokemon(models.Model):
     def __str__(self):
         return self.name
     
+=======
+
+class Pokemon(models.Model):
+    name = models.CharField(max_length=100, null=False)
+    type = models.CharField(max_length=40, null=False)
+    weight = models.IntegerField(null=False)
+    height = models.IntegerField(null=False)
+    
+    def __str__(self):
+        return self.name
+    
+    ## Trainer
+    # name
+    # age
+    # level 
+>>>>>>> a978398 (LAB-4 ARPI EN PROCESO)

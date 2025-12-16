@@ -23,9 +23,13 @@ from . import settings
 urlpatterns = [
     path('', include('pokedex.urls')),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('accounts/', include('django.contrib.auth.urls')),
     path('api/', include('api.urls')),
     path('o/', include('oauth2_provider.urls')),
+=======
+    path('', include('pokedex.urls'))
+>>>>>>> a978398 (LAB-4 ARPI EN PROCESO)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

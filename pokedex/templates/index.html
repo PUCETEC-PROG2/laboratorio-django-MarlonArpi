@@ -51,6 +51,17 @@
                     {% endif %}
                 </div>
             </div>
+<<<<<<< HEAD
+=======
+            <p class="p-2">Hola, este es tu primer sitio en Django</p>
+            <ul class="list-group">
+                {% for pokemon in pokemons %}
+                <li class="list-group-item">
+                    <a href="pokemon/{{pokemon.id}}">{{ pokemon | capfirst }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+>>>>>>> a978398 (LAB-4 ARPI EN PROCESO)
         </div>
     </div>
     {% endfor %}
