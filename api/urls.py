@@ -1,9 +1,11 @@
-from django.urls import path,include
-from rest_framework import routers
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import PokemonViewSet, TrainerViewSet
 
-router = routers.DefaultRouter()
-router.register(r'pokemons', views.PokemonViewSet)
+router = DefaultRouter()
+
+router.register('pokemons', PokemonViewSet, basename='pokemon')
+router.register('trainers', TrainerViewSet, basename='trainer')
 
 urlpatterns = [
     path('', include(router.urls)),
